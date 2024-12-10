@@ -27,7 +27,7 @@
         }
 
         h2 {
-            color: #2d3e50;
+            color: #4caf50;
             font-size: 28px;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -115,9 +115,9 @@
     ?>
 
     <?php if ($bmi !== null): ?>
-        <h3>ชื่อ: <?php echo htmlspecialchars($name); ?></h3>
-        <h3>น้ำหนัก: <?php echo number_format($weight, 1); ?> กิโลกรัม</h3>
-        <h3>ส่วนสูง: <?php echo number_format($height, 2); ?> เมตร</h3>
+        <h3>ชื่อ: <span style="color: black;"><?php echo htmlspecialchars($name); ?></span></h3>
+        <h3>น้ำหนัก: <span style="color: black;"><?php echo number_format($weight, 1); ?> กิโลกรัม</span></h3>
+        <h3>ส่วนสูง: <span style="color: black;"><?php echo number_format($height, 2); ?> เมตร</span></h3>
         <h3>BMI: <span style="color: blue;"><?php echo number_format($bmi, 2); ?></span></h3>
         <h3>สถานะสุขภาพ: <span style="color: green;"><?php echo $status; ?></span></h3>
         <p class="advice">คำแนะนำ: <?php echo $advice; ?></p>

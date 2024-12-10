@@ -92,9 +92,9 @@
 <body>
 
 <div class="container">
-    <h2>โปรแกรมสำหรับคำนวณพื้นที่สามเหลี่ยม</h2>
+    <h2>โปรแกรมสำหรับคำนวณค่าBMI</h2>
 
-    <h3>คำนวณพื้นที่รูปสามเหลี่ยม</h3>
+    <h3>คำนวณBMI โปรดกรอกข้อมูลให้ถูกต้อง</h3>
     <form action="testbmi.php" method="post">
     <form action="bmi.php" method="post">
     <label>ชื่อ:</label>
