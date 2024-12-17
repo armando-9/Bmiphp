@@ -73,46 +73,55 @@
 <div class="container">
     <h2>ผลการคำนวณ BMI</h2>
     <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // รับค่า
-        $name = isset($_POST['name']) ? trim($_POST['name']) : null;
-        $weight = isset($_POST['weight']) ? (float)$_POST['weight'] : null;
-        $height = isset($_POST['height']) ? (float)$_POST['height'] : null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // รับค่า
+    $name = isset($_POST['name']) ? trim($_POST['name']) : null;
+    $weight = isset($_POST['weight']) ? (float)$_POST['weight'] : null;
+    $height = isset($_POST['height']) ? (float)$_POST['height'] : null;
 
-        // ตรวจสอบว่าข้อมูลถูกต้อง
-        if ($weight > 0 && $height > 0) {
-            // แปลงส่วนสูง
-            $height = $height / 100;            
-            
-            // คำนวณ BMI
-            $bmi = $weight / ($height * $height);
+    // ตรวจสอบว่าข้อมูลถูกต้อง
+    if ($weight > 0 && $height > 0) {
+        // แปลงส่วนสูงจากเซนติเมตรเป็นเมตร
+        $height = $height / 100;
 
-            
-            if ($bmi < 18.5) {
-                $status = "น้ำหนักน้อยกว่ามาตรฐาน";
-                $advice = "ควรรับประทานอาหารที่มีประโยชน์และเพิ่มปริมาณอาหาร";
-            } elseif ($bmi >= 18.5 && $bmi < 24.9) {
-                $status = "น้ำหนักอยู่ในเกณฑ์ปกติ";
-                $advice = "ควรรักษาน้ำหนักให้อยู่ในเกณฑ์นี้";
-            } elseif ($bmi >= 25 && $bmi < 29.9) {
-                $status = "น้ำหนักเกินมาตรฐาน";
-                $advice = "ควรเริ่มควบคุมอาหารและออกกำลังกาย";
-            } else {
-                $status = "โรคอ้วน";
-                $advice = "ควรปรึกษาแพทย์และดำเนินการลดน้ำหนัก";
-            }
-        } else {
-            
-            $bmi = null;
-            $status = "ไม่สามารถคำนวณได้";
-            $advice = "โปรดกรอกข้อมูลน้ำหนักและส่วนสูงที่ถูกต้อง";
-        }
+        // เรียกใช้ฟังก์ชันคำนวณ BMI
+        $bmi = calbmi($weight, $height);
+
+        // เรียกใช้ฟังก์ชันประเมินสถานะสุขภาพ
+        list($status, $advice) = statusnmi($bmi);
     } else {
-        
-        echo "<h3 style='color: red;'>ไม่มีข้อมูลที่ส่งมา</h3>";
-        exit;
+        $bmi = null;
+        $status = "ไม่สามารถคำนวณได้";
+        $advice = "โปรดกรอกข้อมูลน้ำหนักและส่วนสูงที่ถูกต้อง";
     }
-    ?>
+} else {
+    echo "<h3 style='color: red;'>ไม่มีข้อมูลที่ส่งมา</h3>";
+    exit;
+}
+
+// ฟังก์ชันคำนวณ BMI
+function calbmi($weight, $height) {
+    return $weight / ($height * $height);
+}
+
+// ฟังก์ชันประเมินสถานะสุขภาพจาก BMI
+function statusnmi($bmi) {
+    if ($bmi < 18.5) {
+        $status = "น้ำหนักน้อยกว่ามาตรฐาน";
+        $advice = "ควรรับประทานอาหารที่มีประโยชน์และเพิ่มปริมาณอาหาร";
+    } elseif ($bmi >= 18.5 && $bmi < 24.9) {
+        $status = "น้ำหนักอยู่ในเกณฑ์ปกติ";
+        $advice = "ควรรักษาน้ำหนักให้อยู่ในเกณฑ์นี้";
+    } elseif ($bmi >= 25 && $bmi < 29.9) {
+        $status = "น้ำหนักเกินมาตรฐาน";
+        $advice = "ควรเริ่มควบคุมอาหารและออกกำลังกาย";
+    } else {
+        $status = "โรคอ้วน";
+        $advice = "ควรปรึกษาแพทย์และดำเนินการลดน้ำหนัก";
+    }
+    return array($status, $advice);
+}
+?>
 
     <?php if ($bmi !== null): ?>
         <h3>ชื่อ: <span style="color: black;"><?php echo htmlspecialchars($name); ?></span></h3>
