@@ -88,7 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bmi = calbmi($weight, $height);
 
         // เรียกใช้ฟังก์ชันประเมินสถานะสุขภาพ
-        list($status, $advice) = statusnmi($bmi);
+        $ans = statusnmi($bmi);
+        $status=$ans[0];
+        $advice=$ans[1];
     } else {
         $bmi = null;
         $status = "ไม่สามารถคำนวณได้";
